@@ -131,7 +131,7 @@ class TikTokBusinessModule: NSObject, RCTBridgeModule {
         }
         if let currencyStr = props["CURRENCY"] as? String,
            supportedTTCurrencies.contains(currencyStr) {
-          event.setCurrency(currencyStr as TTCurrency)
+          event.setCurrency(TTCurrency(rawValue: currencyStr))
         }
         if let value = props["VALUE"] as? NSNumber {
           event.setValue(value.stringValue)
