@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.1] - 2026-05-18
+
+### 🚀 Major Updates
+
+- **Updated to TikTok Business SDK v1.6.1** (iOS and Android)
+
+### ✨ Features
+
+- **Added `TikTokSdkConfig` options to `initializeSdk`** for disabling automatic event tracking at initialization time
+  - `disableAutoTracking`: disables all automatic events at once
+  - `disableInstallTracking`: disables install event reporting
+  - `disableLaunchTracking`: disables app launch event reporting
+  - `disableRetentionTracking`: disables 2D-retention event reporting
+  - `disablePaymentTracking`: disables automatic in-app purchase event reporting
+  - Fully backward-compatible — existing calls without `options` are unaffected
+
+### 🐛 Bug Fixes
+
+- **Fixed currency mapping on iOS**: content events now correctly pass the provided currency string (e.g., `EUR`, `ARS`, `BRL`) instead of always defaulting to `USD`.
+
+### 📚 Documentation
+
+- **Added iOS 14+ tracking permission note**: `NSUserTrackingUsageDescription` must be set in `Info.plist` for install and automatic events to work on iOS 14+
+
 ## [1.6.0] - 2025-12-18
 
 ### 🚀 Major Updates

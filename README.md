@@ -38,6 +38,15 @@ cd ios && pod install
 
 2. The SDK will automatically link the TikTok Business SDK dependency.
 
+3. **iOS 14+ — App Tracking Transparency**: The TikTok SDK requires user tracking permission to report install and other automatic events. Add the following key to your `ios/<YourApp>/Info.plist`:
+
+```xml
+<key>NSUserTrackingUsageDescription</key>
+<string>This identifier will be used to deliver personalized ads to you.</string>
+```
+
+Customize the string to match your app's use case. Without this entry, the install event and other automatic tracking may not function correctly on iOS 14+.
+
 ### Android Setup
 
 1. The SDK dependency is automatically included via Gradle.
@@ -119,6 +128,42 @@ await TikTokBusiness.initializeSdk(
 - No trailing or leading commas
 - Array format is recommended for better readability and type safety
 - All TikTok App IDs must match your App ID (SDK requirement)
+
+#### Disabling Automatic Tracking Events
+
+By default, the TikTok SDK automatically reports install, launch, 2D-retention, and in-app purchase events. You can disable any of these at initialization time by passing an optional `options` object:
+
+```js
+import { TikTokBusiness } from 'react-native-tiktok-business-sdk';
+import type { TikTokSdkConfig } from 'react-native-tiktok-business-sdk';
+
+// Disable all automatic events
+await TikTokBusiness.initializeSdk(
+  'YOUR_APP_ID',
+  'YOUR_TIKTOK_APP_ID',
+  'YOUR_ACCESS_TOKEN',
+  false,
+  { disableAutoTracking: true }
+);
+
+// Or disable specific events
+const options: TikTokSdkConfig = {
+  disableInstallTracking: true,     // Don't report install event
+  disableLaunchTracking: true,      // Don't report app launch event
+  disableRetentionTracking: true,   // Don't report 2D-retention event
+  disablePaymentTracking: true,     // Don't report automatic IAP event
+};
+
+await TikTokBusiness.initializeSdk(
+  'YOUR_APP_ID',
+  'YOUR_TIKTOK_APP_ID',
+  'YOUR_ACCESS_TOKEN',
+  false,
+  options
+);
+```
+
+> **Note:** All existing calls without the `options` argument continue to work unchanged.
 
 ### Identify a User
 

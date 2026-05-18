@@ -51,7 +51,8 @@ describe('Edge Cases and Error Handling', () => {
         longAppId,
         longTtAppId,
         accessToken,
-        false
+        false,
+        {}
       );
     });
   });

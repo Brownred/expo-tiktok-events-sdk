@@ -3,6 +3,17 @@ import React
 import UIKit
 import TikTokBusinessSDK
 
+private let supportedTTCurrencies: Set<String> = [
+  "AED", "ARS", "AUD", "BDT", "BGN", "BHD", "BIF", "BOB", "BRL",
+  "CAD", "CHF", "CLP", "CNY", "COP", "CRC", "CZK", "DKK", "DZD",
+  "EGP", "EUR", "GBP", "GTQ", "HKD", "HNL", "HUF", "IDR", "ILS",
+  "INR", "IQD", "ISK", "JOD", "JPY", "KES", "KHR", "KRW", "KWD",
+  "KZT", "LBP", "MAD", "MOP", "MXN", "MYR", "NGN", "NIO", "NOK",
+  "NZD", "OMR", "PEN", "PHP", "PKR", "PLN", "PYG", "QAR", "RON",
+  "RUB", "SAR", "SEK", "SGD", "THB", "TRY", "TWD", "TZS", "UAH",
+  "USD", "VES", "VND", "ZAR"
+]
+
 @objc(TikTokBusinessModule)
 class TikTokBusinessModule: NSObject, RCTBridgeModule {
   
@@ -118,10 +129,9 @@ class TikTokBusinessModule: NSObject, RCTBridgeModule {
         if let description = props["DESCRIPTION"] as? String {
           event.setDescription(description)
         }
-        if let currencyStr = props["CURRENCY"] as? String {
-          // Map currency string to TTCurrency enum - using USD as default
-          let currency = TTCurrency.USD // You may want to add proper currency mapping
-          event.setCurrency(currency)
+        if let currencyStr = props["CURRENCY"] as? String,
+           supportedTTCurrencies.contains(currencyStr) {
+          event.setCurrency(currencyStr as TTCurrency)
         }
         if let value = props["VALUE"] as? NSNumber {
           event.setValue(value.stringValue)
@@ -222,21 +232,39 @@ class TikTokBusinessModule: NSObject, RCTBridgeModule {
   }
   
   /// Initializes the TikTok SDK.
-  /// Accepts appId, ttAppId, accessToken, and an optional debug flag.
-  @objc func initializeSdk(_ appId: String, 
-                          ttAppId: String, 
-                          accessToken: String, 
-                          debug: NSNumber, 
-                          resolver: @escaping RCTPromiseResolveBlock,
-                          rejecter: @escaping RCTPromiseRejectBlock) {
+  /// Accepts appId, ttAppId, accessToken, debug flag, and optional tracking config.
+  @objc func initializeSdk(_ appId: String,
+                           ttAppId: String,
+                           accessToken: String,
+                           debug: NSNumber,
+                           options: NSDictionary?,
+                           resolver: @escaping RCTPromiseResolveBlock,
+                           rejecter: @escaping RCTPromiseRejectBlock) {
     let config = TikTokConfig(accessToken: accessToken, appId: appId, tiktokAppId: ttAppId)
-    
-    let debugValue = debug.boolValue
-    if debugValue {
+
+    if debug.boolValue {
       config?.enableDebugMode()
       config?.setLogLevel(TikTokLogLevelDebug)
     }
-    
+
+    if let opts = options {
+      if opts["disableAutoTracking"] as? Bool == true {
+        config?.disableAutomaticTracking()
+      }
+      if opts["disableInstallTracking"] as? Bool == true {
+        config?.disableInstallTracking()
+      }
+      if opts["disableLaunchTracking"] as? Bool == true {
+        config?.disableLaunchTracking()
+      }
+      if opts["disableRetentionTracking"] as? Bool == true {
+        config?.disableRetentionTracking()
+      }
+      if opts["disablePaymentTracking"] as? Bool == true {
+        config?.disablePaymentTracking()
+      }
+    }
+
     TikTokBusiness.initializeSdk(config) { success, error in
       if success {
         print("[TikTokBusiness] TikTokBusiness initialized OK")
