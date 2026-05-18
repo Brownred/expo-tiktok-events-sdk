@@ -3,6 +3,17 @@ import React
 import UIKit
 import TikTokBusinessSDK
 
+private let supportedTTCurrencies: Set<String> = [
+  "AED", "ARS", "AUD", "BDT", "BGN", "BHD", "BIF", "BOB", "BRL",
+  "CAD", "CHF", "CLP", "CNY", "COP", "CRC", "CZK", "DKK", "DZD",
+  "EGP", "EUR", "GBP", "GTQ", "HKD", "HNL", "HUF", "IDR", "ILS",
+  "INR", "IQD", "ISK", "JOD", "JPY", "KES", "KHR", "KRW", "KWD",
+  "KZT", "LBP", "MAD", "MOP", "MXN", "MYR", "NGN", "NIO", "NOK",
+  "NZD", "OMR", "PEN", "PHP", "PKR", "PLN", "PYG", "QAR", "RON",
+  "RUB", "SAR", "SEK", "SGD", "THB", "TRY", "TWD", "TZS", "UAH",
+  "USD", "VES", "VND", "ZAR"
+]
+
 @objc(TikTokBusinessModule)
 class TikTokBusinessModule: NSObject, RCTBridgeModule {
   
@@ -118,10 +129,9 @@ class TikTokBusinessModule: NSObject, RCTBridgeModule {
         if let description = props["DESCRIPTION"] as? String {
           event.setDescription(description)
         }
-        if let currencyStr = props["CURRENCY"] as? String {
-          // Map currency string to TTCurrency enum - using USD as default
-          let currency = TTCurrency.USD // You may want to add proper currency mapping
-          event.setCurrency(currency)
+        if let currencyStr = props["CURRENCY"] as? String,
+           supportedTTCurrencies.contains(currencyStr) {
+          event.setCurrency(currencyStr as TTCurrency)
         }
         if let value = props["VALUE"] as? NSNumber {
           event.setValue(value.stringValue)
