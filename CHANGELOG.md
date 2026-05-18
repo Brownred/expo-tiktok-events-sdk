@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.2] - 2026-05-18
+
+### 🐛 Bug Fixes
+
+- **Fixed iOS compilation error with TikTokBusinessSDK 1.6.1**: `TTCurrency` is now declared as `NS_STRING_ENUM` in the SDK, which Swift bridges as a struct rather than a plain `String`. Updated the `setCurrency` call to use `TTCurrency(rawValue:)` instead of the `as TTCurrency` coercion that no longer compiles.
+
 ## [1.6.1] - 2026-05-18
 
 ### 🚀 Major Updates
