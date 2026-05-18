@@ -129,6 +129,42 @@ await TikTokBusiness.initializeSdk(
 - Array format is recommended for better readability and type safety
 - All TikTok App IDs must match your App ID (SDK requirement)
 
+#### Disabling Automatic Tracking Events
+
+By default, the TikTok SDK automatically reports install, launch, 2D-retention, and in-app purchase events. You can disable any of these at initialization time by passing an optional `options` object:
+
+```js
+import { TikTokBusiness } from 'react-native-tiktok-business-sdk';
+import type { TikTokSdkConfig } from 'react-native-tiktok-business-sdk';
+
+// Disable all automatic events
+await TikTokBusiness.initializeSdk(
+  'YOUR_APP_ID',
+  'YOUR_TIKTOK_APP_ID',
+  'YOUR_ACCESS_TOKEN',
+  false,
+  { disableAutoTracking: true }
+);
+
+// Or disable specific events
+const options: TikTokSdkConfig = {
+  disableInstallTracking: true,     // Don't report install event
+  disableLaunchTracking: true,      // Don't report app launch event
+  disableRetentionTracking: true,   // Don't report 2D-retention event
+  disablePaymentTracking: true,     // Don't report automatic IAP event
+};
+
+await TikTokBusiness.initializeSdk(
+  'YOUR_APP_ID',
+  'YOUR_TIKTOK_APP_ID',
+  'YOUR_ACCESS_TOKEN',
+  false,
+  options
+);
+```
+
+> **Note:** All existing calls without the `options` argument continue to work unchanged.
+
 ### Identify a User
 
 Call the `identify` method to report user information. All parameters are required.
