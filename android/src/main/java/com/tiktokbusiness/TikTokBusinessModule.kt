@@ -253,13 +253,31 @@ class TikTokBusinessModule(reactContext: ReactApplicationContext) :
   }
 
   @ReactMethod
-  fun initializeSdk(appId: String, ttAppId: String, accessToken: String, debug: Boolean?, promise: Promise) {
+  fun initializeSdk(appId: String, ttAppId: String, accessToken: String, debug: Boolean?, options: ReadableMap?, promise: Promise) {
     try {
       val configBuilder =
         TikTokBusinessSdk.TTConfig(reactApplicationContext, accessToken).setAppId(appId).setTTAppId(ttAppId)
 
       if (debug == true) {
         configBuilder.openDebugMode().setLogLevel(TikTokBusinessSdk.LogLevel.DEBUG)
+      }
+
+      if (options != null) {
+        if (options.hasKey("disableAutoTracking") && options.getBoolean("disableAutoTracking")) {
+          configBuilder.disableAutoEvents()
+        }
+        if (options.hasKey("disableInstallTracking") && options.getBoolean("disableInstallTracking")) {
+          configBuilder.disableInstallLogging()
+        }
+        if (options.hasKey("disableLaunchTracking") && options.getBoolean("disableLaunchTracking")) {
+          configBuilder.disableLaunchLogging()
+        }
+        if (options.hasKey("disableRetentionTracking") && options.getBoolean("disableRetentionTracking")) {
+          configBuilder.disableRetentionLogging()
+        }
+        if (options.hasKey("disablePaymentTracking") && options.getBoolean("disablePaymentTracking")) {
+          configBuilder.disableAutoIapTrack()
+        }
       }
 
       TikTokBusinessSdk.initializeSdk(configBuilder, object : TikTokBusinessSdk.TTInitCallback {

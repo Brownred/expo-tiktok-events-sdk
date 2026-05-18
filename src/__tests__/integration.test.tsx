@@ -498,7 +498,8 @@ describe('Integration Tests', () => {
         'com.example.multiapp',
         '11,22,33',
         'test-token',
-        true
+        true,
+        {}
       );
 
       // 2. Track events after initialization
@@ -541,7 +542,8 @@ describe('Integration Tests', () => {
         'com.example.singleapp',
         '123456',
         'test-token',
-        false
+        false,
+        {}
       );
     });
 
@@ -560,7 +562,8 @@ describe('Integration Tests', () => {
         'com.example.legacyapp',
         '11,22,33',
         'test-token',
-        true
+        true,
+        {}
       );
     });
   });

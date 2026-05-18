@@ -170,26 +170,37 @@ function validateAndNormalizeTikTokAppId(ttAppId: string | string[]): string {
   return ttAppId;
 }
 
+export interface TikTokSdkConfig {
+  disableAutoTracking?: boolean;
+  disableInstallTracking?: boolean;
+  disableLaunchTracking?: boolean;
+  disableRetentionTracking?: boolean;
+  disablePaymentTracking?: boolean;
+}
+
 /**
  * Initializes the TikTok SDK.
  * @param appId - Your app ID: Android package name or iOS listing ID, eg: com.sample.app (from Play Store) or 9876543 (from App Store)
  * @param ttAppId - Your TikTok App ID (string) or App IDs (array). Array format: ['11', '22', '33']. Comma-separated string format: '11,22,33'
  * @param accessToken - Your access token from TikTok Events Manager
  * @param debug - Whether to enable debug mode
+ * @param options - Optional configuration to disable specific automatic tracking events
  * @returns A promise that resolves when the SDK is initialized.
  */
 export const initializeSdk = async (
   appId: string,
   ttAppId: string | string[],
   accessToken: string,
-  debug?: Boolean
+  debug?: Boolean,
+  options?: TikTokSdkConfig
 ): Promise<string> => {
   const normalizedTtAppId = validateAndNormalizeTikTokAppId(ttAppId);
   return await TikTokBusinessModule.initializeSdk(
     appId,
     normalizedTtAppId,
     accessToken,
-    debug || false
+    debug || false,
+    options ?? {}
   );
 };
 

@@ -232,21 +232,39 @@ class TikTokBusinessModule: NSObject, RCTBridgeModule {
   }
   
   /// Initializes the TikTok SDK.
-  /// Accepts appId, ttAppId, accessToken, and an optional debug flag.
-  @objc func initializeSdk(_ appId: String, 
-                          ttAppId: String, 
-                          accessToken: String, 
-                          debug: NSNumber, 
-                          resolver: @escaping RCTPromiseResolveBlock,
-                          rejecter: @escaping RCTPromiseRejectBlock) {
+  /// Accepts appId, ttAppId, accessToken, debug flag, and optional tracking config.
+  @objc func initializeSdk(_ appId: String,
+                           ttAppId: String,
+                           accessToken: String,
+                           debug: NSNumber,
+                           options: NSDictionary?,
+                           resolver: @escaping RCTPromiseResolveBlock,
+                           rejecter: @escaping RCTPromiseRejectBlock) {
     let config = TikTokConfig(accessToken: accessToken, appId: appId, tiktokAppId: ttAppId)
-    
-    let debugValue = debug.boolValue
-    if debugValue {
+
+    if debug.boolValue {
       config?.enableDebugMode()
       config?.setLogLevel(TikTokLogLevelDebug)
     }
-    
+
+    if let opts = options {
+      if opts["disableAutoTracking"] as? Bool == true {
+        config?.disableAutomaticTracking()
+      }
+      if opts["disableInstallTracking"] as? Bool == true {
+        config?.disableInstallTracking()
+      }
+      if opts["disableLaunchTracking"] as? Bool == true {
+        config?.disableLaunchTracking()
+      }
+      if opts["disableRetentionTracking"] as? Bool == true {
+        config?.disableRetentionTracking()
+      }
+      if opts["disablePaymentTracking"] as? Bool == true {
+        config?.disablePaymentTracking()
+      }
+    }
+
     TikTokBusiness.initializeSdk(config) { success, error in
       if success {
         print("[TikTokBusiness] TikTokBusiness initialized OK")
