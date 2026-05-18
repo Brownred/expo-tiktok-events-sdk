@@ -38,6 +38,15 @@ cd ios && pod install
 
 2. The SDK will automatically link the TikTok Business SDK dependency.
 
+3. **iOS 14+ — App Tracking Transparency**: The TikTok SDK requires user tracking permission to report install and other automatic events. Add the following key to your `ios/<YourApp>/Info.plist`:
+
+```xml
+<key>NSUserTrackingUsageDescription</key>
+<string>This identifier will be used to deliver personalized ads to you.</string>
+```
+
+Customize the string to match your app's use case. Without this entry, the install event and other automatic tracking may not function correctly on iOS 14+.
+
 ### Android Setup
 
 1. The SDK dependency is automatically included via Gradle.
