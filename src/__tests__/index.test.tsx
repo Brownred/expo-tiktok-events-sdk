@@ -42,7 +42,8 @@ describe('TikTokBusiness', () => {
         appId,
         ttAppId,
         accessToken,
-        debug
+        debug,
+        {}
       );
     });
 
@@ -59,7 +60,63 @@ describe('TikTokBusiness', () => {
         appId,
         ttAppId,
         accessToken,
-        false
+        false,
+        {}
+      );
+    });
+
+    it('should pass options to native module', async () => {
+      const appId = 'test-app-id';
+      const ttAppId = '123456';
+      const accessToken = 'test-token';
+      const options = {
+        disableInstallTracking: true,
+        disablePaymentTracking: true,
+      };
+
+      mockTikTokBusinessModule.initializeSdk.mockResolvedValue('success');
+
+      await initializeSdk(appId, ttAppId, accessToken, false, options);
+
+      expect(mockTikTokBusinessModule.initializeSdk).toHaveBeenCalledWith(
+        appId,
+        ttAppId,
+        accessToken,
+        false,
+        options
+      );
+    });
+
+    it('should pass disableAutoTracking option to native module', async () => {
+      const appId = 'test-app-id';
+      const ttAppId = '123456';
+      const accessToken = 'test-token';
+      const options = { disableAutoTracking: true };
+
+      mockTikTokBusinessModule.initializeSdk.mockResolvedValue('success');
+
+      await initializeSdk(appId, ttAppId, accessToken, undefined, options);
+
+      expect(mockTikTokBusinessModule.initializeSdk).toHaveBeenCalledWith(
+        appId,
+        ttAppId,
+        accessToken,
+        false,
+        options
+      );
+    });
+
+    it('should default options to empty object when not provided', async () => {
+      mockTikTokBusinessModule.initializeSdk.mockResolvedValue('success');
+
+      await initializeSdk('app-id', '123456', 'test-token');
+
+      expect(mockTikTokBusinessModule.initializeSdk).toHaveBeenCalledWith(
+        'app-id',
+        '123456',
+        'test-token',
+        false,
+        {}
       );
     });
 
@@ -87,7 +144,8 @@ describe('TikTokBusiness', () => {
           'app-id',
           '123456',
           'token',
-          false
+          false,
+          {}
         );
       });
 
@@ -100,7 +158,8 @@ describe('TikTokBusiness', () => {
           'app-id',
           '11,22,33',
           'token',
-          false
+          false,
+          {}
         );
       });
 
@@ -113,7 +172,8 @@ describe('TikTokBusiness', () => {
           'app-id',
           '11,22,33',
           'token',
-          false
+          false,
+          {}
         );
       });
 
@@ -126,7 +186,8 @@ describe('TikTokBusiness', () => {
           'app-id',
           '123456',
           'token',
-          false
+          false,
+          {}
         );
       });
 
@@ -143,7 +204,8 @@ describe('TikTokBusiness', () => {
           'app-id',
           '1,2,3,4,5,6,7,8,9,10',
           'token',
-          false
+          false,
+          {}
         );
       });
     });

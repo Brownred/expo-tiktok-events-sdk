@@ -173,7 +173,7 @@ describe('TypeScript Type Validation', () => {
 
     it('should have methods with correct signatures', () => {
       // Test that methods have the expected number of parameters
-      expect(TikTokBusiness.initializeSdk.length).toBe(4);
+      expect(TikTokBusiness.initializeSdk.length).toBe(5);
       expect(TikTokBusiness.identify.length).toBe(4);
       expect(TikTokBusiness.logout.length).toBe(0);
       expect(TikTokBusiness.trackEvent.length).toBe(3);
