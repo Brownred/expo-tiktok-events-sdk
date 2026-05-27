@@ -1,6 +1,6 @@
 {
   "name": "expo-tiktok-events-sdk",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "TikTok Events SDK for Expo / React Native",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
