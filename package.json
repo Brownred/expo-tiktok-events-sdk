@@ -1,7 +1,7 @@
 {
-  "name": "react-native-tiktok-business-sdk",
-  "version": "1.6.2",
-  "description": "A React Native bridge for the TikTok Business SDK",
+  "name": "expo-tiktok-events-sdk",
+  "version": "1.0.2",
+  "description": "TikTok Events SDK for Expo / React Native",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
@@ -54,14 +54,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mtebele/react-native-tiktok-business.git"
+    "url": "git+https://github.com/brownred/expo-tiktok-events-sdk.git"
   },
-  "author": "Matias Tebele <mati.tebele@gmail.com> (https://github.com/mtebele)",
+  "author": "Lenox Miheso <lenoxmiheso@gmail.com> (https://github.com/brownred)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mtebele/react-native-tiktok-business/issues"
+    "url": "https://github.com/brownred/expo-tiktok-events-sdk/issues"
   },
-  "homepage": "https://github.com/mtebele/react-native-tiktok-business#readme",
+  "homepage": "https://github.com/brownred/expo-tiktok-events-sdk#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
