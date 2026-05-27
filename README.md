@@ -17,7 +17,7 @@ This library provides a modern, promise-based interface for the TikTok Business 
 
 If this saved you time, consider buying me a coffee — it helps keep this maintained!
 
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support-yellow?style=flat&logo=buy-me-a-coffee)](https://buymeacoffee.com/YOUR_USERNAME)
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support-yellow?style=flat&logo=buy-me-a-coffee)](https://buymeacoffee.com/lenoxmiheso)
 
 ---
 
